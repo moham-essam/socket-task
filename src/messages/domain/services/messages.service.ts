@@ -6,7 +6,6 @@ import {RoomsEnum} from "../enums/rooms.enum";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Message} from "../models/message";
 import {Repository} from "typeorm";
-import {User} from "../../../users/domain/models/user";
 
 @Injectable()
 export class MessagesService {
@@ -19,6 +18,10 @@ export class MessagesService {
     create(options: CreateMessageDto) {
         this.publish(options.message);
         this.save(options);
+    }
+
+    find() {
+        return this.repository.find({relations: ['user']});
     }
 
     private publish(message: string) {

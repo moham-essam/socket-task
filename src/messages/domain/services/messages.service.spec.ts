@@ -11,6 +11,7 @@ describe('Messages Service', () => {
     let repository: any;
 
     const userMock: any = {id: 40};
+    const messagesMock = [{message: 'test', user: {id: 50, username: 'test'}}]
 
     beforeAll(async () => {
         publisher = {
@@ -22,6 +23,9 @@ describe('Messages Service', () => {
         repository = {
             save(message: Message) {
                 return Promise.resolve(message);
+            },
+            find() {
+                return messagesMock;
             }
         }
 
@@ -40,5 +44,15 @@ describe('Messages Service', () => {
             expect(publishSpy).toBeCalledWith({message, event: EventTypesEnum.NEW_MESSAGE, room: RoomsEnum.DEFAULT});
             expect(saveSpy).toBeCalledWith({message, user: userMock});
         });
+    });
+
+    describe('find', () => {
+        it('should return all messages on database', async () => {
+            const findSpy = jest.spyOn(repository, 'find');
+            const result = await service.find();
+            expect(result).toEqual(messagesMock);
+            expect(findSpy).toBeCalledWith({relations: ['user']});
+        });
+
     })
 })
