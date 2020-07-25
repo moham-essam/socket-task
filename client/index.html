@@ -8,9 +8,17 @@
 <body>
 <script>
     console.log('heesssse');
-    const socket = io('http://localhost:3000/messages');
+    const socket = io('http://localhost:3000/messages', {
+        transportOptions: {
+            polling: {
+                extraHeaders: {
+                    authorization: 'w'
+                }
+            }
+        }
+    });
 
-    socket.on('connect', function(){
+    socket.on('connect', function () {
         console.log('connected');
     });
 

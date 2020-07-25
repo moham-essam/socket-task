@@ -11,4 +11,8 @@ export class JwtTokenService implements TokenServiceInterface {
     generate(user: User) {
         return this.jwtService.sign({id: user.id, username: user.username});
     }
+
+    verify(token: string) {
+        return this.jwtService.verify(token);
+    }
 }
