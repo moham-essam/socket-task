@@ -4,11 +4,16 @@ import {MessagesModule} from "./messages/messages.module";
 import {SERVE_STATIC_OPTIONS} from "./config/module-options/serve-static.option";
 import {ConfigModule} from "@nestjs/config";
 import {CONFIG_OPTIONS} from "./config/module-options/config.options";
+import {TypeOrmModule} from "@nestjs/typeorm";
+import {TYPEORM_OPTIONS} from "./config/module-options/type-orm.options";
+import {UsersModule} from "./users/users.module";
 
 @Module({
     imports: [
-        MessagesModule,
         ConfigModule.forRoot(CONFIG_OPTIONS),
+        MessagesModule,
+        UsersModule,
+        TypeOrmModule.forRootAsync(TYPEORM_OPTIONS),
         ServeStaticModule.forRoot(SERVE_STATIC_OPTIONS),
     ],
     controllers: [],

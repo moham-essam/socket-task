@@ -1,4 +1,4 @@
-import {OnGatewayConnection, OnGatewayInit, WebSocketGateway, WebSocketServer} from "@nestjs/websockets";
+import {OnGatewayConnection, OnGatewayInit, WebSocketGateway} from "@nestjs/websockets";
 import {Server, Socket} from "socket.io";
 import {RoomPublisherInterface} from "../interfaces/room-publisher.interface";
 import {RoomPublisherOptionsInterface} from "../interfaces/room-publisher-options.interface";
