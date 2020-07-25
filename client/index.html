@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
+<body>
+<script>
+    console.log('heesssse');
+    const socket = io('http://localhost:3000/messages');
+
+    socket.on('connect', function(){
+        console.log('connected');
+    });
+
+    socket.on('new_message', (m) => {
+        console.log(m);
+    })
+</script>
+</body>
+</html>

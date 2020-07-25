@@ -29,6 +29,7 @@ services:
       dockerfile: ./Dockerfile
     volumes:
       - ./src:/app/src
+      - ./client:/app/client
     env_file:
       - .env
     depends_on:

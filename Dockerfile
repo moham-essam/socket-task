@@ -2,7 +2,8 @@ FROM node:latest
 
 WORKDIR /app
 
-COPY ./src ./
+COPY ./client ./client
+COPY ./src ./src
 
 # Copy dependency definitions
 COPY tsconfig.json package.json tsconfig.build.json package-lock.json ./
