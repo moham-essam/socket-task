@@ -7,6 +7,7 @@ import {CONFIG_OPTIONS} from "./config/module-options/config.options";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {TYPEORM_OPTIONS} from "./config/module-options/type-orm.options";
 import {UsersModule} from "./users/users.module";
+import {SharedModule} from "./shared/shared.module";
 
 @Module({
     imports: [
@@ -15,6 +16,7 @@ import {UsersModule} from "./users/users.module";
         UsersModule,
         TypeOrmModule.forRootAsync(TYPEORM_OPTIONS),
         ServeStaticModule.forRoot(SERVE_STATIC_OPTIONS),
+        SharedModule,
     ],
     controllers: [],
     providers: [],
