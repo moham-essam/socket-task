@@ -1,5 +1,5 @@
 import {MessagesService} from "./messages.service";
-import {RoomPublisherInterface} from "../interfaces/room-publisher.interface";
+import {MessageRoomPublisherInterface} from "../interfaces/message-room-publisher.interface";
 import {RoomPublisherOptionsInterface} from "../interfaces/room-publisher-options.interface";
 import {EventTypesEnum} from "../enums/event-types.enum";
 import {RoomsEnum} from "../enums/rooms.enum";
@@ -7,7 +7,7 @@ import {Message} from "../models/message";
 
 describe('Messages Service', () => {
     let service: MessagesService;
-    let publisher: RoomPublisherInterface;
+    let publisher: MessageRoomPublisherInterface;
     let repository: any;
 
     const userMock: any = {id: 40};
@@ -35,13 +35,14 @@ describe('Messages Service', () => {
 
 
     describe('create', () => {
-        it('should publish message to default channel and save the message', function () {
+        it('should publish message to default channel and save the message', async () => {
             const publishSpy = jest.spyOn(publisher, 'publishToRoom');
             const saveSpy = jest.spyOn(repository, 'save');
             const message = 'Hello World!';
-            service.create({message, user: userMock});
+            const createOptions = {message, user: userMock};
+            await service.create(createOptions);
             expect(publishSpy).toBeCalled();
-            expect(publishSpy).toBeCalledWith({message, event: EventTypesEnum.NEW_MESSAGE, room: RoomsEnum.DEFAULT});
+            expect(publishSpy).toBeCalledWith({message: createOptions, event: EventTypesEnum.NEW_MESSAGE, room: RoomsEnum.DEFAULT});
             expect(saveSpy).toBeCalledWith({message, user: userMock});
         });
     });
@@ -51,7 +52,7 @@ describe('Messages Service', () => {
             const findSpy = jest.spyOn(repository, 'find');
             const result = await service.find();
             expect(result).toEqual(messagesMock);
-            expect(findSpy).toBeCalledWith({relations: ['user']});
+            expect(findSpy).toBeCalledWith({relations: ['user'], order: {id: 'DESC'}});
         });
 
     })

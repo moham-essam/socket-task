@@ -1,5 +1,5 @@
 import {Inject, Injectable} from "@nestjs/common";
-import {ROOM_PUBLISHER, RoomPublisherInterface} from "../interfaces/room-publisher.interface";
+import {MESSAGE_ROOM_PUBLISHER, MessageRoomPublisherInterface} from "../interfaces/message-room-publisher.interface";
 import {CreateMessageDto} from "../dtos/create-message.dto";
 import {EventTypesEnum} from "../enums/event-types.enum";
 import {RoomsEnum} from "../enums/rooms.enum";
@@ -10,21 +10,21 @@ import {Repository} from "typeorm";
 @Injectable()
 export class MessagesService {
     constructor(
-        @Inject(ROOM_PUBLISHER) private roomPublisher: RoomPublisherInterface,
+        @Inject(MESSAGE_ROOM_PUBLISHER) private roomPublisher: MessageRoomPublisherInterface,
         @InjectRepository(Message) private repository: Repository<Message>
     ) {
     }
 
-    create(options: CreateMessageDto) {
-        this.publish(options.message);
-        this.save(options);
+    async create(options: CreateMessageDto) {
+        const message = await this.save(options);
+        this.publish(message);
     }
 
     find() {
-        return this.repository.find({relations: ['user']});
+        return this.repository.find({relations: ['user'], order: {id: 'DESC'}});
     }
 
-    private publish(message: string) {
+    private publish(message: Message) {
         this.roomPublisher.publishToRoom({message, event: EventTypesEnum.NEW_MESSAGE, room: RoomsEnum.DEFAULT});
     }
 

@@ -1,6 +1,6 @@
 import {Module} from "@nestjs/common";
-import {ROOM_PUBLISHER} from "./domain/interfaces/room-publisher.interface";
-import {MessagesGateway} from "./domain/gateways/messages.gateway";
+import {MESSAGE_ROOM_PUBLISHER} from "./domain/interfaces/message-room-publisher.interface";
+import {MessagesGateway} from "./api/gateways/messages.gateway";
 import {MessagesService} from "./domain/services/messages.service";
 import {MessagesController} from "./api/messages.controller";
 import {TypeOrmModule} from "@nestjs/typeorm";
@@ -15,7 +15,7 @@ import {Message} from "./domain/models/message";
     ],
     providers: [
         {
-            provide: ROOM_PUBLISHER,
+            provide: MESSAGE_ROOM_PUBLISHER,
             useClass: MessagesGateway,
         },
         MessagesService,

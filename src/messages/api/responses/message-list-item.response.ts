@@ -8,8 +8,12 @@ export class MessageListItemResponse {
     @ApiProperty()
     username: string;
 
+    @ApiProperty()
+    id: number;
+
     constructor(message: Message) {
         this.message = message.message;
         this.username = message.user.username;
+        this.id = message.id;
     }
 }

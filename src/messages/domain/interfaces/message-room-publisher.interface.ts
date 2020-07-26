@@ -1,7 +1,7 @@
 import {RoomPublisherOptionsInterface} from "./room-publisher-options.interface";
 
-export const ROOM_PUBLISHER = 'ROOM_PUBLISHER';
+export const MESSAGE_ROOM_PUBLISHER = 'MESSAGE_ROOM_PUBLISHER';
 
-export interface RoomPublisherInterface {
+export interface MessageRoomPublisherInterface {
     publishToRoom(options: RoomPublisherOptionsInterface): boolean;
 }

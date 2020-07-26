@@ -1,5 +1,6 @@
 import {MessagesGateway} from "./messages.gateway";
-import {RoomsEnum} from "../enums/rooms.enum";
+import {RoomsEnum} from "../../domain/enums/rooms.enum";
+import {MessageListItemResponse} from "../responses/message-list-item.response";
 
 describe('Messages Gateway', () => {
     const gateway = new MessagesGateway();
@@ -40,13 +41,14 @@ describe('Messages Gateway', () => {
         it('should publish to room', function () {
             const spyOnServerTo = jest.spyOn(serverMock, 'to');
             const spyOnServerEmit = jest.spyOn(serverMock, 'emit');
-            gateway.publishToRoom({room: 'test', event: 'test-event', message: 'test-message'});
+            const message: any = {message: 'test', user: {username: 'm', id: 1}, id: 2};
+            gateway.publishToRoom({room: 'test', event: 'test-event', message });
 
             expect(spyOnServerTo).toBeCalled();
             expect(spyOnServerTo).toBeCalledWith('test');
 
             expect(spyOnServerEmit).toBeCalled();
-            expect(spyOnServerEmit).toBeCalledWith('test-event', 'test-message');
+            expect(spyOnServerEmit).toBeCalledWith('test-event', new MessageListItemResponse(message));
         });
     });
 });
