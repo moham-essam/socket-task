@@ -21,6 +21,9 @@ $ npm install
 ## Running the app
 
 ```bash
+# Create .env
+cp .env.example .env
+
 # Run docker compose
 $ docker-compose up
 ```
