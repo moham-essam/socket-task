@@ -10,4 +10,6 @@ COPY tsconfig.json package.json tsconfig.build.json package-lock.json ./
 
 RUN npm i 
 
-CMD ["npm","run", "start:dev"]
+RUN npm run build
+
+CMD ["npm","run", "start:prod"]

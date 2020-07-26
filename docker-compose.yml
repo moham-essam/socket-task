@@ -8,8 +8,6 @@ services:
       interval: 1s
       timeout: 3s
       retries: 30
-    ports:
-      - "6379:6379"
   mysql:
     image: mysql:5.7
     healthcheck:
@@ -21,8 +19,6 @@ services:
       MYSQL_USER: 'user'
       MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'password'
-    ports:
-      - 3307:3306
   server:
     build:
       context: .
